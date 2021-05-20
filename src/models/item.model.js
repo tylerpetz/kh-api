@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const categories = require('../config/categories');
 const { toJSON, paginate } = require('./plugins');
 
 const itemSchema = mongoose.Schema(
@@ -17,20 +18,7 @@ const itemSchema = mongoose.Schema(
     },
     category: {
       type: String,
-      enum: [
-        'Uncategorized',
-        'Keyboard',
-        'Keycap Set',
-        'Case',
-        'Switches',
-        'Artisan Keycap',
-        'Cable',
-        'Deskmat',
-        'Lube',
-        'Springs',
-        'Stabilizers',
-        'Other',
-      ],
+      enum: categories,
       default: 'Uncategorized',
     },
     description: {

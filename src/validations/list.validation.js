@@ -1,12 +1,13 @@
 const Joi = require('joi');
 const { objectId } = require('./custom.validation');
 
+const listBody = {
+  description: Joi.string(),
+  public: Joi.boolean(),
+};
+
 const createList = {
-  body: Joi.object().keys({
-    name: Joi.string().required(),
-    description: Joi.string(),
-    public: Joi.boolean(),
-  }),
+  body: Joi.object().keys({ ...listBody, name: Joi.string().required() }),
 };
 
 const getLists = {
@@ -30,11 +31,7 @@ const updateList = {
     listId: Joi.required().custom(objectId),
   }),
   body: Joi.object()
-    .keys({
-      name: Joi.string(),
-      description: Joi.string(),
-      public: Joi.boolean(),
-    })
+    .keys({ ...listBody, name: Joi.string() })
     .min(1),
 };
 

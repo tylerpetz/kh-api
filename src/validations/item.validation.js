@@ -1,31 +1,34 @@
 const Joi = require('joi');
+const categories = require('../config/categories');
 const { objectId } = require('./custom.validation');
 
-const createItem = {
-  body: Joi.object().keys({
-    name: Joi.string().required(),
-    price: Joi.number().integer(),
-    qty: Joi.number().integer().required(),
-    description: Joi.string(),
-    category: Joi.string(),
-    public: Joi.boolean(),
-    owned: Joi.boolean(),
-    details: Joi.object({
-      maker: Joi.string(),
-      model: Joi.string(),
-      color: Joi.string(),
-    }),
-    urls: Joi.array().items(Joi.string()),
-    lists: Joi.array().items(Joi.string()),
-    photos: Joi.array().items(Joi.string()),
+const itemBody = {
+  price: Joi.number().integer(),
+  qty: Joi.number().integer().required(),
+  description: Joi.string(),
+  category: Joi.string()
+    .required()
+    .valid(...categories),
+  public: Joi.boolean(),
+  owned: Joi.boolean(),
+  details: Joi.object({
+    maker: Joi.string(),
+    model: Joi.string(),
+    color: Joi.string(),
   }),
+  urls: Joi.array().items(Joi.string()),
+  lists: Joi.array().items(Joi.string()),
+  photos: Joi.array().items(Joi.string()),
+};
+
+const createItem = {
+  body: Joi.object().keys({ ...itemBody, name: Joi.string().required() }),
 };
 
 const getItems = {
   query: Joi.object().keys({
     name: Joi.string(),
     category: Joi.string(),
-    public: Joi.boolean(),
     sortBy: Joi.string(),
     limit: Joi.number().integer(),
     page: Joi.number().integer(),
@@ -43,23 +46,7 @@ const updateItem = {
     itemId: Joi.required().custom(objectId),
   }),
   body: Joi.object()
-    .keys({
-      name: Joi.string(),
-      price: Joi.number().integer(),
-      qty: Joi.number().integer(),
-      description: Joi.string(),
-      public: Joi.boolean(),
-      owned: Joi.boolean(),
-      details: Joi.object({
-        maker: Joi.string(),
-        model: Joi.string(),
-        color: Joi.string(),
-      }),
-      category: Joi.string(),
-      urls: Joi.array().items(Joi.string()),
-      lists: Joi.array().items(Joi.string()),
-      photos: Joi.array().items(Joi.string()),
-    })
+    .keys({ ...itemBody, name: Joi.string() })
     .min(1),
 };
 
