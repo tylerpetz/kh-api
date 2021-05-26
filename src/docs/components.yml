@@ -36,6 +36,42 @@ components:
         description: all the stuff that I want
         public: true
 
+    Order:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        shipping:
+          type: number
+        urls:
+          type: array
+          items:
+            type: string
+        details:
+          type: object
+          properties:
+            orderType:
+              type: string
+            website:
+              type: string
+            username:
+              type: string
+        user:
+          type: string
+        lists:
+          type: array
+          items:
+            type: string
+      example:
+        id: 5ebac534954b54139806c112
+        name: fake name
+        description: all the stuff that I want
+        public: true
+
     Item:
       type: object
       properties:

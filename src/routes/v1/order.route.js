@@ -30,7 +30,7 @@ module.exports = router;
  * @swagger
  * /orders:
  *   post:
- *     summary: Create a order
+ *     summary: Create an order
  *     description: Only admins can create orders for others.
  *     tags: [Orders]
  *     security:
